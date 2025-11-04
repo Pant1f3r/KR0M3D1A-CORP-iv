@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cyber">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KR0M3D1A CORP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      @media print {
+        /* Hide non-report elements */
+        header, footer, #root > div > main > section:first-of-type, .export-control {
+          display: none !important;
+        }
+
+        /* Reset body and main for printing */
+        body {
+          background: #ffffff !important;
+          color: #000000 !important;
+          -webkit-print-color-adjust: exact !important;
+          color-adjust: exact !important;
+        }
+        main {
+          padding: 0.5in !important;
+          margin: 0 !important;
+        }
+
+        /* Reset layout and appearance of report sections */
+        .dashboard-grid {
+          display: block !important; /* Stack items vertically */
+        }
+        .dashboard-section {
+          background: transparent !important;
+          border: 1px solid #ddd !important;
+          margin-bottom: 1.5rem !important;
+          padding: 1rem !important;
+          page-break-inside: avoid; /* Try to keep sections on one page */
+        }
+        
+        /* Reset text colors */
+        .dashboard-section h3, .dashboard-section, .dashboard-section p, .dashboard-section div, .dashboard-section span {
+          color: #000000 !important;
+          text-shadow: none !important;
+          animation: none !important;
+        }
+
+        .text-cyber-dim {
+            color: #555 !important;
+        }
+
+        .text-red-500 {
+            color: #b91c1c !important; /* A dark red for print */
+        }
+
+        .text-yellow-400 {
+            color: #713f12 !important; /* A dark yellow/brown for print */
+        }
+        .text-cyber-accent {
+            color: #166534 !important; /* A dark green for print */
+        }
+
+        /* Ensure charts are rendered correctly */
+        .recharts-responsive-container {
+            width: 100% !important;
+            height: 300px !important; /* Fixed height for printing */
+        }
+        .recharts-wrapper {
+            -webkit-print-color-adjust: exact !important;
+            color-adjust: exact !important;
+        }
+        .recharts-cartesian-grid line, .recharts-polar-grid path, .recharts-polar-angle-axis-tick-value text, .recharts-text {
+            stroke: #ccc !important;
+            fill: #000 !important;
+        }
+        .recharts-line-path, .recharts-radar-polygon-stroke {
+            stroke: #000 !important;
+        }
+        .recharts-radar-polygon-fill {
+            fill: #eee !important;
+        }
+      }
+
+      /* --- THEME VARIABLES --- */
+      :root { /* Default: Cyber Theme */
+        --color-bg-rgb: 10 15 30;
+        --color-surface-rgb: 20 26 46;
+        --color-primary-rgb: 0 242 255;
+        --color-secondary-rgb: 255 0 255;
+        --color-accent-rgb: 0 255 127;
+        --color-text-rgb: 224 224 224;
+        --color-dim-rgb: 136 146 176;
+
+        --shadow-primary: #00f2ff;
+        --shadow-secondary: #ff00ff;
+
+        --grid-color: rgba(0, 242, 255, 0.07);
+      }
+
+      [data-theme='dark'] { /* High-Contrast Dark Theme */
+        --color-bg-rgb: 17 24 39;      /* gray-900 */
+        --color-surface-rgb: 31 41 55; /* gray-800 */
+        --color-primary-rgb: 96 165 250;/* blue-400 */
+        --color-secondary-rgb: 244 114 182;/* pink-400 */
+        --color-accent-rgb: 74 222 128; /* green-400 */
+        --color-text-rgb: 249 250 251;  /* gray-50 */
+        --color-dim-rgb: 156 163 175;   /* gray-400 */
+
+        --shadow-primary: #60a5fa;
+        --shadow-secondary: #f472b6;
+        
+        --grid-color: rgba(96, 165, 250, 0.1);
+      }
+      
+      .bg-grid-pattern {
+        background-image: linear-gradient(var(--grid-color) 1px, transparent 1px), linear-gradient(to right, var(--grid-color) 1px, transparent 1px);
+        background-size: 2.5rem 2.5rem;
+      }
+      
+      /* --- CUSTOM SLIDER STYLES --- */
+      input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 1rem;
+        height: 1rem;
+        margin-top: -6px; /* Center thumb on track */
+        background: var(--shadow-primary);
+        cursor: pointer;
+        border-radius: 50%;
+        box-shadow: 0 0 5px var(--shadow-primary);
+        transition: transform 0.2s ease-in-out;
+      }
+      input[type=range]:active::-webkit-slider-thumb {
+        transform: scale(1.2);
+      }
+      input[type=range]::-moz-range-thumb {
+        width: 1rem;
+        height: 1rem;
+        background: var(--shadow-primary);
+        cursor: pointer;
+        border-radius: 50%;
+        border: none;
+        box-shadow: 0 0 5px var(--shadow-primary);
+        transition: transform 0.2s ease-in-out;
+      }
+      input[type=range]:active::-moz-range-thumb {
+        transform: scale(1.2);
+      }
+      input[type=range]::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 0.25rem;
+        cursor: pointer;
+        background: rgb(var(--color-surface-rgb));
+        border-radius: 0.25rem;
+        border: 1px solid rgba(var(--color-primary-rgb), 0.5);
+      }
+      input[type=range]::-moz-range-track {
+        width: 100%;
+        height: 0.25rem;
+        cursor: pointer;
+        background: rgb(var(--color-surface-rgb));
+        border-radius: 0.25rem;
+        border: 1px solid rgba(var(--color-primary-rgb), 0.5);
+      }
+    </style>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              'orbitron': ['Orbitron', 'sans-serif'],
+              'roboto-mono': ['Roboto Mono', 'monospace'],
+            },
+            colors: {
+              'cyber-bg': 'rgb(var(--color-bg-rgb) / <alpha-value>)',
+              'cyber-surface': 'rgb(var(--color-surface-rgb) / <alpha-value>)',
+              'cyber-primary': 'rgb(var(--color-primary-rgb) / <alpha-value>)',
+              'cyber-secondary': 'rgb(var(--color-secondary-rgb) / <alpha-value>)',
+              'cyber-accent': 'rgb(var(--color-accent-rgb) / <alpha-value>)',
+              'cyber-text': 'rgb(var(--color-text-rgb) / <alpha-value>)',
+              'cyber-dim': 'rgb(var(--color-dim-rgb) / <alpha-value>)',
+            },
+            boxShadow: {
+              'cyber': '0 0 5px var(--shadow-primary), 0 0 10px var(--shadow-primary), 0 0 15px var(--shadow-primary), 0 0 20px var(--shadow-secondary)',
+              'cyber-sm': '0 0 2px var(--shadow-primary), 0 0 4px var(--shadow-primary)',
+            },
+            keyframes: {
+              'pulse-glow': {
+                '0%, 100%': { opacity: 0.7 },
+                '50%': { opacity: 1 },
+              },
+              'flicker': {
+                '0%, 19.9%, 22%, 62.9%, 64%, 64.9%, 70%, 100%': {
+                  opacity: 0.99,
+                  textShadow: '0 0 5px var(--shadow-primary), 0 0 10px var(--shadow-primary), 0 0 15px var(--shadow-primary)',
+                },
+                '20%, 21.9%, 63%, 63.9%, 65%, 69.9%': {
+                  opacity: 0.4,
+                  textShadow: 'none',
+                },
+              },
+            },
+            animation: {
+              'pulse-glow': 'pulse-glow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'flicker': 'flicker 3s linear infinite',
+            },
+          },
+        },
+      }
+    </script>
+  <script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.24.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "recharts": "https://aistudiocdn.com/recharts@^3.2.1",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

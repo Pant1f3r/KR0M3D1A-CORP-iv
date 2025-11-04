@@ -1,0 +1,7 @@
+{
+  "name": "\\(°_°)/ KR0M3D1A CORP",
+  "description": "An application for a super AI agent to inspect digital guardrails, analyzing latency, security, and other metrics with advanced visualizations and a real-time virtual event reader.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
