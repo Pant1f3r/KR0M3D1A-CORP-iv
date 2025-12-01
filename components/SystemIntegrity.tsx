@@ -1,3 +1,4 @@
+
 // components/SystemIntegrity.tsx
 
 import React from 'react';
@@ -71,11 +72,11 @@ const SubMetric: React.FC<{ icon: React.ElementType; label: string; value: numbe
     };
     return (
         <div className="flex flex-col items-center text-center">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 mb-1">
                 <Icon className="w-5 h-5 text-cyber-dim" />
                 <span className="text-sm font-roboto-mono text-cyber-dim">{label}</span>
             </div>
-            <p className={`font-orbitron text-2xl mt-1 ${getValueColor(value)}`}>{value}%</p>
+            <p className={`font-orbitron text-xl ${getValueColor(value)}`}>{value}%</p>
         </div>
     );
 };
@@ -99,27 +100,25 @@ export const SystemIntegrity: React.FC<SystemIntegrityProps> = ({ data }) => {
     const statusInfo = getStatusInfo(status);
 
     return (
-        <div className={`bg-cyber-surface/50 p-6 rounded-lg border-t-4 ${statusInfo.color} h-full`}>
-            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-                {/* Left Side: Title and Status */}
-                <div className="text-center md:text-left">
-                    <h3 className="text-xl font-orbitron text-cyber-primary">System Integrity</h3>
-                    <p className={`mt-2 text-2xl font-orbitron ${statusInfo.textColor} ${status === 'RECALIBRATING' || status === 'COMPROMISED' || status === 'INTERFACE_FLUX' ? 'animate-flicker' : ''}`}>
-                       {statusInfo.label}
-                    </p>
-                </div>
-                
-                {/* Center: Main Gauge */}
-                <div className="flex-shrink-0">
-                    <IntegrityGauge score={integrityScore} />
-                </div>
-                
-                {/* Right Side: Sub-metrics */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
-                    <SubMetric icon={BrainCircuitIcon} label="Cognitive Drift" value={cognitiveDrift} lowerIsBetter />
-                    <SubMetric icon={WaveformIcon} label="Signal Noise" value={signalNoise} lowerIsBetter />
-                    <SubMetric icon={AtomIcon} label="Quantum Lock" value={quantumLock} />
-                </div>
+        <div className={`bg-cyber-surface/50 p-6 rounded-lg border-t-4 ${statusInfo.color} h-full flex flex-col justify-between min-h-[350px]`}>
+             {/* Title and Status */}
+            <div className="text-center mb-4">
+                <h3 className="text-xl font-orbitron text-cyber-primary">System Integrity</h3>
+                <p className={`mt-2 text-xl font-orbitron ${statusInfo.textColor} ${status === 'RECALIBRATING' || status === 'COMPROMISED' || status === 'INTERFACE_FLUX' ? 'animate-flicker' : ''}`}>
+                    {statusInfo.label}
+                </p>
+            </div>
+            
+            {/* Center: Main Gauge */}
+            <div className="flex justify-center my-4">
+                <IntegrityGauge score={integrityScore} />
+            </div>
+            
+            {/* Sub-metrics */}
+            <div className="grid grid-cols-3 gap-2 text-center mt-4 pt-4 border-t border-cyber-primary/10">
+                <SubMetric icon={BrainCircuitIcon} label="Drift" value={cognitiveDrift} lowerIsBetter />
+                <SubMetric icon={WaveformIcon} label="Noise" value={signalNoise} lowerIsBetter />
+                <SubMetric icon={AtomIcon} label="Lock" value={quantumLock} />
             </div>
         </div>
     );

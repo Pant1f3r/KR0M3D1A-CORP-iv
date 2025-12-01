@@ -1,3 +1,4 @@
+
 // components/GuardrailHelix.tsx
 
 import React from 'react';
@@ -12,7 +13,7 @@ export const GuardrailHelix: React.FC<GuardrailHelixProps> = ({ data }) => {
   const { explanation, basePairs } = data;
 
   return (
-    <div className="bg-cyber-surface/50 p-6 rounded-lg border border-cyber-primary/20 h-full">
+    <div className="bg-cyber-surface/50 p-6 rounded-lg border border-cyber-primary/20 h-full min-h-[350px]">
       <div className="flex items-center gap-3 mb-4">
         <HelixIcon className="w-6 h-6 text-cyber-accent" />
         <h3 className="text-xl font-orbitron text-cyber-primary">Guardrail Digital Helix</h3>

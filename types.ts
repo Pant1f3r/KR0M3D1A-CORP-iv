@@ -1,3 +1,4 @@
+
 // types.ts
 
 import type React from 'react';
@@ -52,6 +53,28 @@ export interface AnalysisData {
   guardrailHelixAnalysis: GuardrailHelixData;
   memoryIntegrity: MemoryIntegrityData;
   patchworkProtocol: PatchworkData;
+  firewallData: FirewallData;
+}
+
+// Data for the new Firewall Component
+export interface FirewallRule {
+  id: string;
+  priority: number;
+  action: 'ALLOW' | 'BLOCK';
+  protocol: 'TCP' | 'UDP' | 'ICMP' | 'ANY';
+  source: string;
+  destination: string;
+  port: string;
+  status: 'ACTIVE' | 'INACTIVE';
+  description: string;
+}
+
+export interface FirewallData {
+  status: 'ACTIVE' | 'DEGRADED' | 'OFFLINE' | 'ISOLATED';
+  uptime: string;
+  activeConnections: number;
+  blockedRequests: number;
+  rules: FirewallRule[];
 }
 
 // Data for the new System Patchwork Protocol
@@ -238,6 +261,8 @@ export interface ThreatActor {
     riskAssociationScore: number;
     reported_by?: string;
     campaign?: string;
+    recentActivities?: string[];
+    associatedVulnerabilities?: string[];
 }
 
 // Data for vulnerability points

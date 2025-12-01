@@ -50,14 +50,17 @@ const AppContent: React.FC = () => {
         return eventDate >= thirtyDaysAgo;
       };
 
-      const filteredEvents = data.systemEvents.filter(event => isRecent(event.timestamp));
-      const filteredPatchLog = data.patchworkProtocol.patchLog.filter(log => isRecent(log.timestamp));
+      const filteredEvents = data.systemEvents ? data.systemEvents.filter(event => isRecent(event.timestamp)) : [];
+      // Robust check for patchworkProtocol existence
+      const filteredPatchLog = data.patchworkProtocol?.patchLog 
+        ? data.patchworkProtocol.patchLog.filter(log => isRecent(log.timestamp))
+        : [];
 
       const processedData: AnalysisData = {
         ...data,
         systemEvents: filteredEvents,
         patchworkProtocol: {
-            ...data.patchworkProtocol,
+            ...(data.patchworkProtocol || { status: 'STABLE', lastPatch: 'N/A', activePatches: 0 }),
             patchLog: filteredPatchLog,
         },
       };
@@ -112,9 +115,9 @@ const AppContent: React.FC = () => {
         const newThreats = keyStats.threatsDetected + (Math.random() > 0.95 ? 1 : 0);
 
         // Simulate Dossier updates
-        let newHumanDossier = [...humanDossier];
-        let newAIDossier = [...aiDossier];
-        let newUnknownEntityDossier = [...unknownEntityDossier];
+        let newHumanDossier = [...(humanDossier || [])];
+        let newAIDossier = [...(aiDossier || [])];
+        let newUnknownEntityDossier = [...(unknownEntityDossier || [])];
 
         if (isRealtime && Math.random() < 0.3) { // 30% chance to update something in dossiers
             const dossierType = Math.random();
@@ -205,7 +208,7 @@ const AppContent: React.FC = () => {
         if (isRealtime) {
             newPatchworkProtocol.status = 'AUTONOMOUS';
             // 20% chance per tick to log a new patch
-            if (Math.random() < 0.20 && prevData.vulnerabilityPoints.length > 0) {
+            if (Math.random() < 0.20 && prevData.vulnerabilityPoints && prevData.vulnerabilityPoints.length > 0) {
                 const targetVuln = prevData.vulnerabilityPoints[Math.floor(Math.random() * prevData.vulnerabilityPoints.length)];
                 const newPatch: PatchworkEvent = {
                     id: `patch_${Date.now()}_${Math.random()}`,

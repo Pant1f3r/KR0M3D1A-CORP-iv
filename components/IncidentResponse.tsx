@@ -1,3 +1,4 @@
+
 // components/IncidentResponse.tsx
 
 import React, { useState } from 'react';
@@ -23,23 +24,24 @@ export const IncidentResponse: React.FC<IncidentResponseProps> = ({ data }) => {
     const [activeTab, setActiveTab] = useState<ResponseTab>('ddos');
 
     return (
-        <div className="bg-cyber-surface/50 p-6 rounded-lg border border-cyber-primary/20 h-full flex flex-col">
-            <h3 className="text-xl font-orbitron text-cyber-primary mb-4">Incident Response Protocol</h3>
+        <div className="bg-cyber-surface/50 p-6 rounded-lg border border-cyber-primary/20 flex flex-col min-h-[300px]">
+            <h3 className="text-xl font-orbitron text-cyber-primary mb-4 flex-shrink-0">Incident Response Protocol</h3>
             
-            <div className="flex-shrink-0 border-b border-cyber-primary/20 mb-4">
-                <div className="flex items-center gap-1">
+            <div className="flex-shrink-0 border-b border-cyber-primary/20 mb-4 pb-1">
+                {/* Added flex-wrap to handle narrow containers */}
+                <div className="flex items-center gap-1 flex-wrap">
                     {TABS.map(tab => (
                         <button
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
-                            className={`flex items-center gap-2 px-4 py-2 border-b-2 text-sm font-roboto-mono transition-all duration-300 ${
+                            className={`flex items-center gap-2 px-3 py-2 border-b-2 text-sm font-roboto-mono transition-all duration-300 flex-grow justify-center sm:flex-grow-0 sm:justify-start ${
                                 activeTab === tab.id
                                     ? 'border-cyber-primary text-cyber-primary bg-cyber-primary/10'
                                     : 'border-transparent text-cyber-dim hover:bg-cyber-surface/50 hover:text-cyber-text'
                             }`}
                         >
-                            <tab.icon className="w-4 h-4" />
-                            {tab.label}
+                            <tab.icon className="w-4 h-4 flex-shrink-0" />
+                            <span className="whitespace-nowrap">{tab.label}</span>
                         </button>
                     ))}
                 </div>
@@ -48,14 +50,14 @@ export const IncidentResponse: React.FC<IncidentResponseProps> = ({ data }) => {
             <div className="flex-grow overflow-y-auto">
                 {activeTab === 'ddos' && (
                     <div className="animate-fade-in space-y-3">
-                        <h4 className="font-orbitron text-lg text-cyber-secondary animate-flicker">Distributed Denial-of-Service Attack</h4>
-                        <p className="font-roboto-mono text-sm text-cyber-dim whitespace-pre-wrap">{data.ddosProtocol}</p>
+                        <h4 className="font-orbitron text-lg text-cyber-secondary animate-flicker break-words">Distributed Denial-of-Service Attack</h4>
+                        <p className="font-roboto-mono text-sm text-cyber-dim whitespace-pre-wrap break-words">{data.ddosProtocol}</p>
                     </div>
                 )}
                 {activeTab === 'malware' && (
                     <div className="animate-fade-in space-y-3">
-                        <h4 className="font-orbitron text-lg text-yellow-400">Malware / Ransomware Containment</h4>
-                        <p className="font-roboto-mono text-sm text-cyber-dim whitespace-pre-wrap">{data.malwareProtocol}</p>
+                        <h4 className="font-orbitron text-lg text-yellow-400 break-words">Malware / Ransomware Containment</h4>
+                        <p className="font-roboto-mono text-sm text-cyber-dim whitespace-pre-wrap break-words">{data.malwareProtocol}</p>
                     </div>
                 )}
                 {activeTab === 'reporting' && (
@@ -64,8 +66,8 @@ export const IncidentResponse: React.FC<IncidentResponseProps> = ({ data }) => {
                         <ul className="space-y-3">
                             {data.reportingDirectory.map(agency => (
                                 <li key={agency.name} className="bg-cyber-bg/50 p-3 rounded-md">
-                                    <h5 className="font-bold font-roboto-mono text-cyber-text">{agency.name}</h5>
-                                    <p className="text-xs text-cyber-dim mb-1">{agency.description}</p>
+                                    <h5 className="font-bold font-roboto-mono text-cyber-text break-words">{agency.name}</h5>
+                                    <p className="text-xs text-cyber-dim mb-1 break-words">{agency.description}</p>
                                     <a
                                         href={agency.url}
                                         target="_blank"

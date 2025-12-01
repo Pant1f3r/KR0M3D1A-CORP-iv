@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" data-theme="cyber">
   <head>
@@ -194,17 +195,22 @@
               'flicker': {
                 '0%, 19.9%, 22%, 62.9%, 64%, 64.9%, 70%, 100%': {
                   opacity: 0.99,
-                  textShadow: '0 0 5px var(--shadow-primary), 0 0 10px var(--shadow-primary), 0 0 15px var(--shadow-primary)',
+                  textShadow: '0 0 5px var(--shadow-primary), 0 0 10px var(--shadow-primary), 0 0 15px var(--shadow-primary), 0 0 20px var(--shadow-secondary)',
                 },
                 '20%, 21.9%, 63%, 63.9%, 65%, 69.9%': {
                   opacity: 0.4,
                   textShadow: 'none',
                 },
               },
+              'fade-in': {
+                '0%': { opacity: 0 },
+                '100%': { opacity: 1 },
+              },
             },
             animation: {
               'pulse-glow': 'pulse-glow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
               'flicker': 'flicker 3s linear infinite',
+              'fade-in': 'fade-in 0.5s ease-out',
             },
           },
         },

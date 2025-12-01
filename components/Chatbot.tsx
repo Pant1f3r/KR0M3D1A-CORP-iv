@@ -273,7 +273,13 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose, data, target 
         <header className="flex items-center justify-between p-4 border-b border-cyber-primary/20 flex-shrink-0">
           <div className="flex items-center gap-3">
             <NeoIcon className="w-6 h-6 text-cyber-primary animate-pulse-glow" />
-            <h2 className="font-orbitron text-xl text-cyber-primary">AI Agent: NEO</h2>
+            <div>
+                <h2 className="font-orbitron text-xl text-cyber-primary">SECURE REAL-TIME UPLINK</h2>
+                <div className="flex items-center gap-2 text-[10px] text-cyber-accent font-roboto-mono tracking-wider">
+                    <span className="w-2 h-2 rounded-full bg-cyber-accent animate-pulse"></span>
+                    NEO AGENT ONLINE
+                </div>
+            </div>
           </div>
           
           {/* Voice Selector */}

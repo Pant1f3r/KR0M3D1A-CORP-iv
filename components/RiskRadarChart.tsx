@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect, useRef } from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import type { RiskProfileDataPoint } from '../types';
 
@@ -8,6 +9,24 @@ interface RiskRadarChartProps {
 
 export const RiskRadarChart: React.FC<RiskRadarChartProps> = ({ data }) => {
   const [seriesVisibility, setSeriesVisibility] = useState({ value: true });
+  const [shouldRender, setShouldRender] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.contentRect.width > 0 && entry.contentRect.height > 0) {
+          setShouldRender(true);
+        }
+      }
+    });
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   const handleLegendClick = (dataKey: string) => {
     setSeriesVisibility(prevState => ({
@@ -24,8 +43,13 @@ export const RiskRadarChart: React.FC<RiskRadarChartProps> = ({ data }) => {
   };
 
   return (
-    <div style={{ width: '100%', height: 300 }}>
-        <ResponsiveContainer>
+    <div ref={containerRef} style={{ width: '100%', height: 300, position: 'relative' }} className="min-w-0">
+      {!shouldRender && (
+        <div className="absolute inset-0 bg-cyber-surface/10 animate-pulse rounded" />
+      )}
+      {shouldRender && (
+        <div style={{ position: 'absolute', inset: 0 }}>
+          <ResponsiveContainer width="100%" height="100%">
             <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
                 <PolarGrid stroke="#2A3C4D" />
                 <PolarAngleAxis dataKey="subject" tick={{ fill: '#E6F1FF', fontSize: 10 }} />
@@ -48,7 +72,9 @@ export const RiskRadarChart: React.FC<RiskRadarChartProps> = ({ data }) => {
                     itemStyle={{ color: '#E6F1FF' }}
                 />
             </RadarChart>
-        </ResponsiveContainer>
+          </ResponsiveContainer>
+        </div>
+      )}
     </div>
   );
 };

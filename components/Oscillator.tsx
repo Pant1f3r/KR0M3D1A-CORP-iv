@@ -1,3 +1,4 @@
+
 // components/Oscillator.tsx
 
 import React, { useEffect, useRef } from 'react';
@@ -112,7 +113,7 @@ export const Oscillator: React.FC<OscillatorProps> = ({ signal }) => {
     const statusColor = signal.isAttackSignal ? 'text-cyber-secondary animate-flicker' : 'text-cyber-accent';
 
     return (
-        <section className="bg-cyber-surface/50 p-4 rounded-lg border border-cyber-primary/20 h-full flex flex-col">
+        <section className="bg-cyber-surface/50 p-4 rounded-lg border border-cyber-primary/20 h-full flex flex-col min-h-[400px]">
             <div className="flex justify-between items-center mb-2">
                 <div className="flex items-center gap-3">
                     <SignalIcon className="w-6 h-6 text-cyber-primary" />
